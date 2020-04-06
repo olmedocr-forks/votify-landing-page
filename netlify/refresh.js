@@ -1,15 +1,14 @@
 const AWS        = require('aws-sdk');
-const config     = require('./config.json');
 const request    = require('request');
 const url        = require('url');
 const encrpytion = require('./encryption');
 
 const nop = () => {};
 
-const clientId        = config.SPOTIFY_CLIENT_ID;
-const clientSecret    = config.SPOTIFY_CLIENT_SECRET;
-const clientCallback  = config.SPOTIFY_CALLBACK_URL;
-const encSecret       = config.SPOTIFY_ENCRYPTION_SECRET;
+const clientId        = process.CLIENT_ID
+const clientSecret    = process.SPOTIFY_CLIENT_SECRET;
+const clientCallback  = process.SPOTIFY_CALLBACK_URL;
+const encSecret       = process.SPOTIFY_ENCRYPTION_SECRET;
 const authString      = new Buffer(`${clientId}:${clientSecret}`).toString('base64');
 const authorization   = `Basic ${authString}`;
 
