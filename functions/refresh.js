@@ -11,27 +11,29 @@ const authorization   = `Basic ${authString}`;
 
 const spotifyEndpoint = 'https://accounts.spotify.com/api/token';
 
-exports.swap = (event, context) => {
+exports.refresh = (event, context) => {
+  const refreshToken = event.refresh_token;
   const formData = {
-    grant_type:   'authorization_code',
-    redirect_uri: config.SPOTIFY_CALLBACK_URL,
-    code:         event.code,
+    grant_type:    'refresh_token',
+    refresh_token: refreshToken
   };
   const options = {
     uri:     url.parse(spotifyEndpoint),
-    headers: { 'Authorization' : authorization },
-    form :   formData,
-    method:  'POST',
-    json :   true
+    headers: {
+      'Authorization' : authorization
+    },
+    form:   formData,
+    method: 'POST',
+    json:   true
   };
 
   return new Promise((resolve, reject) => {
-    request(options, (error, response, body) => {
-      if (response.statusCode === 200) {
-        body.refresh_token = encrpytion.encrypt(body.refresh_token, encSecret);
+    request(options, function (error, response, body) {
+      if (response.statusCode === 200 && !!body.refresh_token) {
+        body.refresh_token = body.refresh_token;
       }
       resolve(body);
     });
   }).then(value => context.succeed(value))
-    .catch(e => context.fail(JSON.stringify(e)));
+    .catch(e => context.fail(e));
 };
