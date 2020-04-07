@@ -1,15 +1,19 @@
 {
-  "name": "functions",
+  "name": "lambda-functions",
   "version": "1.0.0",
   "description": "",
-  "main": "refresh.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:lambda": "netlify-lambda serve src",
+    "build:lambda": "netlify-lambda build src"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "request": "^2.88.2",
-    "url": "^0.11.0"
+    "axios": "^0.19.2",
+    "btoa": "^1.2.1",
+    "netlify-lambda": "^1.6.3",
+    "qs": "^6.9.3"
   }
 }
