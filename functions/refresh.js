@@ -32,7 +32,7 @@ exports.handler = (event, context, callback) => {
     axios.request(config).then((response) => {
         callback(null, {
             statusCode: 200,
-            body: response.data,
+            body: JSON.stringify(response.data),
         });
     }).catch((error) => {
         callback(null, {

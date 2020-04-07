@@ -2,9 +2,9 @@ const btoa = require('btoa');
 const axios = require('axios');
 const qs = require('qs');
 
-const clientId        = process.env.SPOTIFY_CLIENT_ID;
-const clientSecret    = process.env.SPOTIFY_CLIENT_SECRET;
-const clientCallback  = process.env.SPOTIFY_CALLBACK_URL;
+const clientId        = '5bf0778b83024abba5ba4f2146eb7272';
+const clientSecret    = '52cf3b723802409780e83055bd793395';
+const clientCallback  = 'votify://spotify-login-callback';
 
 const spotifyEndpoint = 'https://accounts.spotify.com/api/token';
 
@@ -15,8 +15,7 @@ exports.handler = (event, context, callback) => {
 	    method: "POST",
 	    url: spotifyEndpoint,
 	    headers: {
-	      "Content-Type": "application/x-www-form-urlencoded",
-	      "Authorization": "Basic " + btoa(clientId + ":" + clientSecret)
+	      'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret)
 	    },
 	    data: {
 	      grant_type: 'authorization_code',
@@ -30,13 +29,9 @@ exports.handler = (event, context, callback) => {
     axios.request(config).then((response) => {
         callback(null, {
             statusCode: 200,
-            body: response.data,
+            body: JSON.stringify(response.data),
         });
     }).catch((error) => {
-        callback(null, {
-            statusCode: 400,
-            body: JSON.stringify(error)
-        });
+        callback(error);
     });
-
 };
