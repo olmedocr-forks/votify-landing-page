@@ -11,6 +11,9 @@ const spotifyEndpoint = 'https://accounts.spotify.com/api/token';
 exports.handler = (event, context, callback) => {
     const urlParams = new URLSearchParams(event.body)
 
+    // CHECK: if at some point token refresh fails, check the way Spotify encodes the refresh_token, 
+    // it might be included in the event instead of being encoded in the url as a query parameter,
+    // use "refresh_token: event.body.refresh_token" in line 26
     const config = {
 	    method: "POST",
 	    url: spotifyEndpoint,
@@ -19,9 +22,8 @@ exports.handler = (event, context, callback) => {
 	      "Authorization": "Basic " + btoa(clientId + ":" + clientSecret)
 	    },
 	    data: {
-	      grant_type: 'authorization_code',
-	      redirect_uri: clientCallback,
-	      code: urlParams.get('code')
+	      grant_type: 'refresh_token',
+	      refresh_token: urlParams.get('refresh_token')
 	    }
     }
     
