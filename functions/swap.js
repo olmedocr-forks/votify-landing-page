@@ -2,9 +2,9 @@ const btoa = require('btoa');
 const axios = require('axios');
 const qs = require('qs');
 
-const clientId        = '5bf0778b83024abba5ba4f2146eb7272';
-const clientSecret    = '52cf3b723802409780e83055bd793395';
-const clientCallback  = 'votify://spotify-login-callback';
+const clientId        = process.env.SPOTIFY_CLIENT_ID;
+const clientSecret    = process.env.SPOTIFY_CLIENT_SECRET;
+const clientCallback  = process.env.SPOTIFY_CALLBACK_URL;
 
 const spotifyEndpoint = 'https://accounts.spotify.com/api/token';
 
